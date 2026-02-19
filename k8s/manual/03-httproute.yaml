@@ -1,0 +1,25 @@
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: HTTPRoute
+metadata:
+  name: hello-httproute
+  namespace: default
+spec:
+  parentRefs:
+    - name: hello-gateway
+  hostnames:
+    - "example.com"
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /hello
+      backendRefs:
+        - name: hello-svc
+          port: 80
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /goodbye
+      backendRefs:
+        - name: hello-svc
+          port: 80
